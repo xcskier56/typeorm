@@ -10,6 +10,11 @@ export interface JoinTableMetadataArgs {
     readonly target: Function | string
 
     /**
+     * Class that defines the junction table.
+     */
+    readonly junctionEntity?: Function
+
+    /**
      * Class's property name to which this column is applied.
      */
     readonly propertyName: string

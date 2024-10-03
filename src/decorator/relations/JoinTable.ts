@@ -36,6 +36,7 @@ export function JoinTable(
             ({} as JoinTableOptions | JoinTableMultipleColumnsOptions)
         getMetadataArgsStorage().joinTables.push({
             target: object.constructor,
+            junctionEntity: (options as JoinTableOptions).junctionEntity,
             propertyName: propertyName,
             name: options.name,
             joinColumns: (options && (options as JoinTableOptions).joinColumn

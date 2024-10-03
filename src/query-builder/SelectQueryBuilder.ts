@@ -2373,6 +2373,10 @@ export class SelectQueryBuilder<Entity extends ObjectLiteral>
                 let junctionCondition = "",
                     destinationCondition = ""
 
+                const deleteDateColumn =
+                    relation.junctionEntityMetadata?.deleteDateColumn
+                        ?.propertyPath
+
                 if (relation.isOwning) {
                     junctionCondition = relation.joinColumns
                         .map((joinColumn) => {
@@ -2387,6 +2391,11 @@ export class SelectQueryBuilder<Entity extends ObjectLiteral>
                                 joinColumn.referencedColumn!.propertyPath
                             )
                         })
+                        .concat(
+                            deleteDateColumn
+                                ? ` "${junctionAlias}"."${deleteDateColumn}" IS NULL`
+                                : [],
+                        )
                         .join(" AND ")
 
                     destinationCondition = relation.inverseJoinColumns
@@ -2418,6 +2427,11 @@ export class SelectQueryBuilder<Entity extends ObjectLiteral>
                                     joinColumn.referencedColumn!.propertyPath
                                 )
                             },
+                        )
+                        .concat(
+                            deleteDateColumn
+                                ? ` "${junctionAlias}"."${deleteDateColumn}" IS NULL`
+                                : [],
                         )
                         .join(" AND ")
 

@@ -296,6 +296,7 @@ export class EntityMetadataBuilder {
                                 relation,
                                 joinTable,
                             )
+
                         relation.registerForeignKeys(
                             ...junctionEntityMetadata.foreignKeys,
                         )
@@ -313,6 +314,16 @@ export class EntityMetadataBuilder {
                             junctionEntityMetadata,
                             entityMetadatas,
                         )
+
+                        // Add deleteDateColumn to junctionEntityMetadata to support filtering soft-deleted join records
+                        const entityMetadataForJunction = entityMetadatas.find(
+                            (en) =>
+                                en.target === joinTable.junctionEntity &&
+                                en.isJunction === false,
+                        )
+                        junctionEntityMetadata.deleteDateColumn =
+                            entityMetadataForJunction?.deleteDateColumn
+
                         entityMetadatas.push(junctionEntityMetadata)
                     })
             })

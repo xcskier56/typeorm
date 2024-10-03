@@ -11,6 +11,11 @@ export interface JoinTableOptions {
     name?: string
 
     /**
+     * Specifies the entity (if any) that defines the join table.
+     */
+    junctionEntity?: Function
+
+    /**
      * First column of the join table.
      */
     joinColumn?: JoinColumnOptions
